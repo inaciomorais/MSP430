@@ -1,0 +1,3 @@
+break statement can be used to immediately exit a for or while loop.
+
+continue statemente can be used to jump iterations of for or while loop.
