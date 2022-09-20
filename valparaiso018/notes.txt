@@ -1,0 +1,48 @@
+P1DIR Register - Port P1 direction
+
+P1OUT Register - Port P1 output
+
+P1REN Register - Port P1 resistor enable
+
+Input Register PxIN:
+Each bit in each PxIN register reflects the value of the input signal at the corresponding I/O pin when the pin is configured as I/O function.
+	Bit = 0: The input is low
+	Bit = 1: The input is high
+
+Output Registers PxOUT:
+Each bit in each PxOUT register is the value to be output on the corresponding I/O pin when the pin is configured as I/O function, output direction, and the pullup/down resistor is disabled.
+	Bit = 0: The output is low
+	Bit = 1: The output is high
+
+If the pin's pullup/pulldown resistor is enabled, the corresponding bit in the PxOUT register selects pullup or pulldown.
+	Bit = 0: The pin is pulled down
+	Bit = 1: The pin is pulled up
+
+Direction Registers PxDIR:
+Each bit in each PxDIR register selects the direction of the corresponding I/O pin, regardless of the selected function for the pin. PxDIR bits for I/O pins that are selected for other functions must be set as required by the other function.
+	Bit = 0: The port pin is switched to input direction
+	Bit = 1: The port pin is switched to output direction
+
+Pullup/Pulldown Resistor Enable Registers PxREN:
+Each bit in each PxREN register enables or disables the pullup/pulldown resistor of the corresponding I/O pin. The corresponding bit in the PxOUT register selects if the pin is pulled up or pulled down.
+	Bit = 0: Pullup/pulldown resistor disabled
+	Bit = 1: Pullup/pulldown resistor enabled
+
+All of the pins are defaulted to be inputs (PxDIR = 0b00000000;).
+
+If the value is non-zero, it is always taken as true.
+
+#define BIT0 0x01
+#define BIT1 0x02
+#define BIT2 0x04
+#define BIT3 0x08
+#define BIT4 0x10
+#define BIT5 0x20
+#define BIT6 0x40
+#define BIT7 0x80 // BIT0 to BIT7 already defined by <msp430.h> like WDTPW and WDTHOLD
+
+P1DIR = P1DIR | BIT0;
+P1DIR = P1DIR | BIT4;
+P1DIR = P1DIR | BIT7;		// Or: P1DIR = P1DIR | (BIT7 + BIT4 + BIT0);
+
+PxDIR = PxDIR | BITy;
