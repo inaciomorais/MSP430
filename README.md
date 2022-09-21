@@ -3,5 +3,5 @@ Porting MSP430FR6989 Launchpad codes from Udemy Course 'Microcontrollers and the
 
 A 'main.c' and notes collection.
 
-CCSTUDIO Code Composer Studio integrated development environment (IDE) v10x 10.4.0.00006 (06 Jul 2021) 
+Code Composer Studio integrated development environment (IDE) v10x 10.4.0.00006
 https://www.ti.com/tool/download/CCSTUDIO/10.4.0.00006
