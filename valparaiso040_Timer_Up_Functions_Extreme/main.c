@@ -1,16 +1,6 @@
 #include <msp430.h> 
 
 #define RED_LED 0x01        // P1.0 is the RED LED
-#define _SMCLK  0x0200
-#define _UP     0x0010
-#define _TAIFG  0x0001
-//#define _ID_2   0x40        // Input divider - /2
-//#define _ID_4   0x80        // Input divider - /4
-#define _ID_8   0xC0        // Input divider - /8
-//#define _DIV_2  0x02        // Divider for SMCLK - /2
-//#define _DIV_4  0x04        // Divider for SMCLK - /4
-#define _DIV_8  0x06        // Divider for SMCLK - /8
-//_ID_8 and _DIV_8 = 0.00005818182 s
 
 void stop_watchdog_timer(void);
 void timer0_will_count_up_for_500ms(void);
@@ -52,23 +42,31 @@ void toggle_red_LED(void) {
 }
 
 void clear_timer0_elapsed_flag(void) {
-    TA0CTL = TA0CTL & (~_TAIFG);
+    TA0CTL = TA0CTL & (~TAIFG);
 }
 
 unsigned int timer0_500ms_elapsed(void) {
-    return TA0CTL & _TAIFG;
+    return TA0CTL & TAIFG;
 }
 
 void timer0_will_count_up_for_500ms(void) {
-    BCSCTL2 = _DIV_8; //Basic Clock System Control Register 2
+    BCSCTL1 = CALBC1_1MHZ;      // 1MHz DCO Frequency (Calibrated DCOCTL and
+    DCOCTL = CALDCO_1MHZ;       // BCSCTL1 register settings)
+    BCSCTL2 = DIVS_3;           // Basic Clock System Control Register 2
+                                // DIVS_3 = SMCLK Divider 3: /8
+                                // 1 s / ( 1000000 MHz [DCOCLK] / 8 [BCSCTL2 DIVSx: SMCLK Divider] / 8 [TACTL IDx: Timer A input divider] )
+                                // = 0,000064 s = 64 us
+
     timer0_count_for_500ms();
     timer0_in_up_mode();
 }
 
 void timer0_count_for_500ms(void) {
-    TA0CCR0 = 8594;
+    TA0CCR0 = 7812;
 }
 
 void timer0_in_up_mode(void) {
-    TA0CTL  = _SMCLK | _ID_8 | _UP;
+    TA0CTL  = (TASSEL_2 + ID_3 + MC_1);    // TASSEL_2: Timer A clock source select: 2 - SMCLK
+                                           // ID_3: Timer A input divider: 3 - /8
+                                           // MC_1: Timer A mode control: 1 - Up to CCR0
 }
