@@ -4,24 +4,23 @@
 #define GREEN_LED 0x40        // P1.6 is the GREEN LED
 #define GREEN_LED_OFF 0xBF  // Used to turn off the GREEN LED
 #define BUTTON13 0x08       // P1.3 is the button
-#define _SMCLK  0x0200
-#define _UP     0x0010
-#define _TAIFG  0x0001
-//#define _ID_2   0x40        // Input divider - /2
-//#define _ID_4   0x80        // Input divider - /4
-#define _ID_8   0xC0        // Input divider - /8
-//#define _DIV_2  0x02        // Divider for SMCLK - /2
-//#define _DIV_4  0x04        // Divider for SMCLK - /4
-#define _DIV_8  0x06        // Divider for SMCLK - /8
-//_ID_8 and _DIV_8 = 0.00005818182 s
 
 main()
 {
     WDTCTL = WDTPW | WDTHOLD;   // Stop Watchdog Timer
-    BCSCTL2 = _DIV_8; //Basic Clock System Control Register 2
 
-    TA0CCR0 = 17187; //~ 1s
-    TA0CTL  = _SMCLK | _ID_8 | _UP;
+    BCSCTL1 = CALBC1_1MHZ;      // 1MHz DCO Frequency (Calibrated DCOCTL and
+    DCOCTL = CALDCO_1MHZ;       // BCSCTL1 register settings)
+    BCSCTL2 = DIVS_3;           // Basic Clock System Control Register 2
+                                // DIVS_3 = SMCLK Divider 3: /8
+                                // 1 s / ( 1000000 MHz [DCOCLK] / 8 [BCSCTL2 DIVSx: SMCLK Divider] / 8 [TACTL IDx: Timer A input divider] )
+                                // = 0,000064 s = 64 us
+
+    TA0CCR0 = 15625; //~ 1s
+
+    TA0CTL  = (TASSEL_2 + ID_3 + MC_1);    // TASSEL_2: Timer A clock source select: 2 - SMCLK
+                                           // ID_3: Timer A input divider: 3 - /8
+                                           // MC_1: Timer A mode control: 1 - Up to CCR0
     TA0CCTL0 = CCIE;
 
     P1DIR = RED_LED | GREEN_LED;
