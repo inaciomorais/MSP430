@@ -46,3 +46,8 @@ P1DIR = P1DIR | BIT4;
 P1DIR = P1DIR | BIT7;		// Or: P1DIR = P1DIR | (BIT7 + BIT4 + BIT0);
 
 PxDIR = PxDIR | BITy;
+
+
+Configuring Unused Port Pins
+
+Unused I/O pins should be configured as I/O function, output direction, and left unconnected on the PC board, to prevent a floating input and reduce power consumption. The value of the PxOUT bit is irrelevant, since the pin is unconnected. Alternatively, the integrated pullup/pulldown resistor can be enabled by setting the PxREN bit of the unused pin to prevent the floating input.
