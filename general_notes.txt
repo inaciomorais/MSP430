@@ -31,3 +31,27 @@ a-- Post-decrement
 A good way to remember the difference between pre- and post- is that if the  notation comes before the  variable, it will be incremented/decremented before anything else in the instruction. If the notation comes after the variable, it will increment/decrement after the rest of the instruction has evaluated.
 
 MSP430G2553 doesn't have a Power Management Module (PMM). There isn't a Port I/O Control by a Power Mode Control Register (Like MSP430FR6989 PM5CTL0 - Power Mode 5 Control Register 0).
+
+ACLK: Auxiliary clock selectable for individual peripheral modules.
+MCLK: Master clock used by the CPU and system.
+SMCLK: Sub-main clock selectable for individual peripheral modules.
+
+The internal very-low-power low-frequency oscillator (VLO) provides a typical frequency of 12 kHz without requiring a crystal. VLOCLK source is selected by setting LFXT1Sx = 10 when XTS = 0.
+
+XTS - BCSCTL1 Bit 6 (0) - LFXT1 mode select:
+0 Low-frequency mode
+1 High-frequency mode
+
+LFXT1Sx - BCSCTL3 Bits 5-4 (00) - Low-frequency clock select and LFXT1 range select. These bits select between LFXT1 and VLO when XTS = 0:
+00 32768-Hz crystal on LFXT1
+01 Reserved
+10 VLOCLK
+11 Digital external clock source
+
+DIVAx - BCSCTL1 Bits 5-4 (00) - Divider for ACLK:
+00 /1
+01 /2
+10 /4
+11 /8
+
+
