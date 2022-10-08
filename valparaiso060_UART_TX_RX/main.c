@@ -1,4 +1,4 @@
-// Plug a female-female wire onto the P1.2 (TXD) pin and the P1.1 (RXD) pin.
+// Plug a female-female wire onto the P1.2 (TXD) pin and the P1.1 (RXD) pin (same wire).
 
 #include <msp430.h>
 
