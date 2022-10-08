@@ -1,3 +1,5 @@
+// Plug a female-female wire onto the P1.2 (TXD) pin and the P1.1 (RXD) pin.
+
 #include <msp430.h>
 
 void clock_config(void);
