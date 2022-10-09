@@ -1,0 +1,161 @@
+Universal Asynchronous Receiver Transmitter
+
+UART peripherals are asynchronous in nature. The peripheral  does not use a common clock signal to synchronize two devices that are communicating with each other.
+
+We transmit the byte of data we want to send by storing it in a 'transmission buffer' register.
+
+9600 baud = 9600 bits per second 
+
+1/9600 = 104us
+
+The UART standard requires the transmission pin to remain HI when data is not being transmitted. Next, the UART standard requires to send out a start bit prior to sending out the intended data. Since the line will be HI prior to data transmission, the start bit will be LO. This transmission from HI to LO indicates to all the devices listening to the UART bus that a new byte of information will be sent. After the start bit, the UART peripheral sends the data. The universal UART standard sends the least significant bit first. Therefore, the UART transmits the bits in reverse order. After the last bit of data is sent, the UART peripheral terminates the message by sending a stop bit. After the stop bit, the UART ensures the TX line remains HI until the next message is ready to be sent out. All bits are aproximately 104us longer (9600 baud).
+
+P1.1 - UCA0RXD - USCI_A0 UART mode: receive data input (MSP430FR6989 - P4.3)
+P1.2 - UCA0TXD - USCI_A0 UART mode: transmit data output (MSP430FR6989 - P4.2)
+
+In UART mode, the USCI transmits and receives characters at a bit rate asynchronous to another device.
+Timing for each character is based on the selected baud rate of the USCI. The transmit and receive
+functions use the same baud rate frequency.
+
+The USCI is reset by setting the UCSWRST bit. Clearing UCSWRST releases the USCI for operation.
+
+Initializing or Re-Configuring the USCI Module
+The recommended USCI initialization/re-configuration process is:
+1. Set UCSWRST (UCAxCTL1)
+2. Initialize all USCI registers with UCSWRST = 1 (including UCAxCTL1)
+3. Configure ports.
+4. Clear UCSWRST via software
+5. Enable interrupts (optional) via UCAxRXIE and/or UCAxTXIE
+
+The USCI module is enabled by clearing the UCSWRST bit and the receiver is ready and in an idle state. The falling edge of the start bit enables the baud rate generator and the UART state machine checks for a valid start bit.
+
+The USCI module is enabled by clearing the UCSWRST bit and the transmitter is ready and in an idle state. A transmission is initiated by writing data to UCAxTXBUF. When this occurs, the baud rate generator is enabled and the data in UCAxTXBUF is moved to the transmit shift register on the next BITCLK after the transmit shift register is empty. UCAxTXIFG is set when new data can be written into UCAxTXBUF.
+
+LSB-first is typically required for UART communication.
+
+UCA0CTL0:
+UCAxCTL0, USCI_Ax Control Register 0
+
+UCPEN - Bit 7 (0) - Parity enable
+0 Parity disabled.
+1 Parity enabled. Parity bit is generated (UCAxTXD) and expected (UCAxRXD). In address-bit multiprocessor mode, the address bit is included in the parity calculation.
+
+UCPAR - Bit 6 (0) - Parity select. UCPAR is not used when parity is disabled.
+0 Odd parity
+1 Even parity
+
+UC7BIT - Bit 4 (0) - Character length. Selects 7-bit or 8-bit character length.
+0 8-bit data
+1 7-bit data
+
+UCSPB - Bit 3 (0) - Stop bit select. Number of stop bits.
+0 One stop bit
+1 Two stop bits
+
+UCMODEx - Bits 2-1 (00) - USCI mode. The UCMODEx bits select the asynchronous mode when UCSYNC = 0.
+00 UART mode
+01 Idle-line multiprocessor mode
+10 Address-bit multiprocessor mode
+11 UART mode with automatic baud rate detection
+
+
+UCA0CTL1:
+UCAxCTL1, USCI_Ax Control Register 1
+UCSSELx - Bits 7-6 (00) - USCI clock source select. These bits select the BRCLK source clock.
+00 UCLK
+01 ACLK
+10 SMCLK
+11 SMCLK
+
+UCTXADDR - Bit 2 (0) - Transmit address. Next frame to be transmitted will be marked as address depending on the selected multiprocessor mode.
+0 Next frame transmitted is data
+1 Next frame transmitted is an address
+
+UCSWRST - Bit 0 (0) - Software reset enable
+0 Disabled. USCI reset released for operation.
+1 Enabled. USCI logic held in reset state.
+
+UCA0BR0:
+UCAxBR0, USCI_Ax Baud Rate Control Register 0
+UCBRx - 7-0 - Clock prescaler setting of the Baud rate generator. The 16-bit value of (UCAxBR0 + UCAxBR1 × 256) forms the prescaler value.
+
+UCA0BR1:
+UCAxBR1, USCI_Ax Baud Rate Control Register 1
+UCBRx - 7-0 - Clock prescaler setting of the Baud rate generator. The 16-bit value of (UCAxBR0 + UCAxBR1 × 256) forms the prescaler value.
+
+UCA0MCTL:
+UCAxMCTL, USCI_Ax Modulation Control Register
+
+UCBRFx - Bits 7-4 - First modulation stage select. These bits determine the modulation pattern for BITCLK16 when UCOS16 = 1. Ignored with UCOS16 = 0.
+
+UCBRSx - Bits 3-1 - Second modulation stage select. These bits determine the modulation pattern for BITCLK.
+
+UCOS16 - Bit 0 - Oversampling mode enabled
+0 Disabled
+1 Enabled
+
+UCA0STAT:
+UCAxSTAT, USCI_Ax Status Register
+
+UCADDR/UCIDLE
+UCADDR - Bit 1 - Address received in address-bit multiprocessor mode.
+0 Received character is data
+1 Received character is an address
+UCIDLE Idle line detected in idle-line multiprocessor mode.
+0 No idle line detected
+1 Idle line detected
+
+UCBUSY - Bit 0 - USCI busy. This bit indicates if a transmit or receive operation is in progress.
+0 USCI inactive
+1 USCI transmitting or receiving
+
+
+UCA0RXBUF:
+UCAxRXBUF, USCI_Ax Receive Buffer Register
+
+UCRXBUFx - Bits 7-0 - The receive-data buffer is user accessible and contains the last received character from the receive shift register. Reading UCAxRXBUF resets the receive-error bits, the UCADDR or UCIDLE bit, and UCAxRXIFG. In 7-bit data mode, UCAxRXBUF is LSB justified and the MSB is always reset.
+
+UCA0TXBUF:
+UCAxTXBUF, USCI_Ax Transmit Buffer Register
+
+UCTXBUFx - Bits 7-0 - The transmit data buffer is user accessible and holds the data waiting to be moved into the transmit shift register and transmitted on UCAxTXD. Writing to the transmit data buffer clears UCAxTXIFG. The MSB of UCAxTXBUF is not used for 7-bit data and is reset.
+
+
+IE2, Interrupt Enable Register 2
+
+UCA0TXIE - Bit 1 (0) - USCI_A0 transmit interrupt enable
+0 Interrupt disabled
+1 Interrupt enabled
+
+UCA0RXIE - Bit 0 (0) - USCI_A0 receive interrupt enable
+0 Interrupt disabled
+1 Interrupt enabled
+
+
+IFG2, Interrupt Flag Register 2
+
+UCA0TXIFG - Bit 1 (0) - USCI_A0 transmit interrupt flag. UCA0TXIFG is set when UCA0TXBUF is empty.
+0 No interrupt pending
+1 Interrupt pending
+
+UCA0RXIFG - Bit 0 (0) - USCI_A0 receive interrupt flag. UCA0RXIFG is set when UCA0RXBUF has received a complete character.
+0 No interrupt pending
+1 Interrupt pending
+
+
+Function Select Registers PxSEL and PxSEL2
+Port pins are often multiplexed with other peripheral module functions.
+
+UCA0RXD - P1SEL.x (1) - P1SEL2.x (1)
+UCA0TXD - P1SEL.x (1) - P1SEL2.x (1)
+
+P1SEL  = BIT1 | BIT2;
+P1SEL2 = BIT1 | BIT2;
+
+BRCLK Frequency [Hz] = 8000000 | Baud Rate [Baud] = 9600 | UCBRx = 833 | UCBRSx = 2
+UCBRx = 833 (Table 15-4): 
+UCA0BR0 = 0x41; /* USCI A0 Baud Rate 0 */
+UCA0BR1 = 0x03; /* USCI A0 Baud Rate 1 */
+
+UCBRSx = 2 (Table 15-4 and Table 15-2. BITCLK Modulation Pattern):
+UCA0MCTL = 0x22; /* USCI A0 Modulation Control Register */
