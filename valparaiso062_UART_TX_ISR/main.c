@@ -26,7 +26,7 @@ main()
 __interrupt void UART_ISR(void)
 {
     P1OUT ^= BIT0;
-    IFG2 = IFG2 & (~UCA0RXIFG);
+    IFG2 = IFG2 & (~UCA0TXIFG);
 }
 
 void clock_config(void)
