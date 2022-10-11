@@ -55,7 +55,7 @@ void timer0_will_count_up_for_500ms(void) {
     BCSCTL2 = DIVS_3;           // Basic Clock System Control Register 2
                                 // DIVS_3 = SMCLK Divider 3: /8
                                 // 1 s / ( 1000000 MHz [DCOCLK] / 8 [BCSCTL2 DIVSx: SMCLK Divider] / 8 [TACTL IDx: Timer A input divider] )
-                                // = 0,000064 s = 64 us
+                                // = 0.000064 s = 64 us
 
     timer0_count_for_500ms();
     timer0_in_up_mode();
