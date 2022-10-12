@@ -5,3 +5,5 @@ A 'main.c' and notes collection.
 
 Code Composer Studio integrated development environment (IDE) v10x 10.4.0.00006
 https://www.ti.com/tool/download/CCSTUDIO/10.4.0.00006
+
+https://www.udemy.com/course/mcu_msp430/
