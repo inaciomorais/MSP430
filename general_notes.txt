@@ -55,3 +55,8 @@ DIVAx - BCSCTL1 Bits 5-4 (00) - Divider for ACLK:
 11 /8
 
 
+MSP430G2x53 Recommended Operating Conditions
+Typical Vcc: 3.3 V
+Vcc Max Supply voltage: 3.6 V
+Max Fsystem: 16MHz
+
