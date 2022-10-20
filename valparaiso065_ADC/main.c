@@ -30,8 +30,10 @@ void adc_setup(void)
                                          /* ADC10ON - ADC10 On/Enable */
 
     ADC10CTL1 = INCH_4;     /* INCH_4 - Selects Channel 4 (A4)*/
+                                    //These bits select the channel for a single-conversion or the highest channel for a sequence of conversions
                             /* SHS_0 - ADC10SC */
                             /* ADC10SSEL_0 - ADC10OSC */
                             /* CONSEQ_0 - Single channel single conversion */
     ADC10AE0 = BIT4;        // Analog input enable (A4)
+                                    //These bits enable the corresponding pin for analog input
 }
