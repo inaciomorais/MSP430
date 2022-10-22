@@ -39,9 +39,6 @@ void adc_setup(void)
 #pragma vector = ADC10_VECTOR
 __interrupt void ADC10_ISR(void)
 {
-    ADC10CTL0 |= ENC + ADC10SC;     /* ENC - ADC10 Enable Conversion */
-                                    /* ADC10SC - ADC10 Start Conversion */
-
     if (ADC10MEM > 0x200) {         // if input > 1.65V
         P1OUT = BIT0;
     }
