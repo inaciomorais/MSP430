@@ -60,3 +60,10 @@ Typical Vcc: 3.3 V
 Vcc Max Supply voltage: 3.6 V
 Max Fsystem: 16MHz
 
+
+signed char		__int8_t
+unsigned char		__uint8_t
+int			__int16_t
+unsigned int		__uint16_t
+long			__int32_t
+unsigned long		__uint32_t
