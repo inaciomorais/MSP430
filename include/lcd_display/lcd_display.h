@@ -3,7 +3,7 @@
  *
  * 11/2022
  *
- * A. In·cio Morais
+ * A. In√°cio Morais
  * anderson.morais@protonmail.com - inacio.morais@protonmail.com
  * +55 35 99161-9878
  *
@@ -69,15 +69,17 @@ void LCDGoto(unsigned char pos,unsigned char ln);
 #define data        1
 
 // These #defines create the pin connections to the LCD Display
-#define LCD_PORT        P2OUT
+#define LCD_PORT        P2OUT                  // BIT0 LCD D4 (11) - BIT1 LCD D5 (12) - BIT2 LCD D6 (13) - BIT3 LCD D7 (14)
 #define LCD_DIR         P2DIR
-#define LCD_ENABLE      LCD_PORT |=  BIT5      // LCD enable
+#define LCD_ENABLE      LCD_PORT |=  BIT5      // LCD Enable - E (6)
 #define LCD_DISABLE     LCD_PORT &= ~BIT5
-#define LCD_DATA        LCD_PORT |=  BIT4      // LCD register select line
+#define LCD_DATA        LCD_PORT |=  BIT4      // LCD Register Select line - RS (4)
 #define LCD_INSTR       LCD_PORT &= ~BIT4
-// LCD R/W pin to ground
-// LCD VSS pin to ground
-// LCD VCC pin to 5V
+// LCD R/W pin (5) to ground
+// LCD VSS pin (1) to ground
+// LCD VCC pin (2) to +5Vcc (MSP430G2553 Value Line Launchpad: from Test Pin 1 - TP1)
+// LCD V0  pin (3) - Pot
+// LCD D0 (7) - LCD D1 (8) - LCD D2 (9) - LCD D3 (10): NC
 
 #define NB_LINES    2                        // Number of display lines
 #define NB_COL      16                       // Number of characters per line
