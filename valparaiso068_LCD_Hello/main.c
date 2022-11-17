@@ -1,5 +1,17 @@
-// Using External 16x2 LCD Display
-// LCD VCC pin (2) to +5Vcc from MSP430G2553 Value Line Launchpad Test Pin 1 (TP1) 
+/* 
+ * Using External 16x2 LCD Display
+ *
+ * LCD VSS pin (1) to ground
+ * LCD VCC pin (2) to +5Vcc from MSP430G2553 Value Line Launchpad Test Pin 1 (TP1)
+ * LCD Register Select line - RS (4) P2.4
+ * LCD R/W pin (5) to ground
+ * LCD Enable - E (6) P2.5
+ * LCD D4 (11) P2.0
+ * LCD D5 (12) P2.1
+ * LCD D6 (13) P2.2
+ * LCD D7 (11) P2.3
+ */
+
 
 #include <msp430.h>
 #include "delay_xs.h"
