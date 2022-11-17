@@ -1,4 +1,6 @@
-FRAM (Ferroelectric Random Access Memory) is used for both program memory and data memory (like in the MSP430FR6989). It replaces Flash (program memory), SRAM (volatile data memory) and EEPROM (non-volatile data memory) memories inside a microcontroller.
+Flash - program memory
+SRAM - volatile data memory
+EEPROM - non-volatile data memory
  
 XOR (^) is used extensively in C programs for microcontrollers to toggle a specific bit. NOT (~) cannot be used to invert only specific bits in the number. When a bit is XORed with a 0, it does not change. When a bit is XORed with a 1, it is inverted.
 
