@@ -91,7 +91,6 @@ void LCDGoto(unsigned char pos,unsigned char ln);
 #define LCD_DATA        LCD_PORT |=  BIT4      // LCD Register Select line - RS (4)
 #define LCD_INSTR       LCD_PORT &= ~BIT4
 
-
 #define NB_LINES    2                        // Number of display lines
 #define NB_COL      16                       // Number of characters per line
 
