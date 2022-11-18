@@ -39,7 +39,10 @@ void clock_config(void)
     DCOCTL  = CALDCO_16MHZ;      // BCSCTL1 register settings)
 }
 
-/* HITACHI HD44780U ROM A02 Pattern (Datasheet page 18)
+/* How to call some special built-in characters:
+ *
+ * HITACHI HD44780U ROM A02 Pattern (Datasheet page 18)
+ *
  *   LCDPutChar(0x9A); // Ω      LCDPutChar(0xAB); // <<
  *   LCDPutChar(0xBB); // >>     LCDPutChar(0xB0); // °
  *   LCDPutChar(0xC0); // À      LCDPutChar(0xE0); // à
@@ -56,4 +59,5 @@ void clock_config(void)
  *   LCDPutChar(0xE7); // ç      LCDPutChar(0xDA); // Ú
  *   LCDPutChar(0xFA); // ú      LCDPutChar(0xFC); // ü
  *
- * WINSTAR WH1602C English and European standard font (ET) - See Extended ASCII table */
+ * WINSTAR WH1602C English and European standard font (ET) - See Extended ASCII table
+ */
