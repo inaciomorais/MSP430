@@ -12,7 +12,6 @@
  * LCD D7 (14) P2.3
  */
 
-
 #include <msp430.h>
 #include "delay_xs.h"
 #include "lcd_display.h"
