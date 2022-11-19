@@ -29,7 +29,7 @@ main()
 
     while(1)
     {
-        for(i=0;i<16;i++)
+        for(i=0;i<17;i++)
         {
             LCDGoto(i,0);
             LCDPutChar(48+i);
@@ -40,7 +40,7 @@ main()
 
         delay_ms(3000, 16);
 
-        for(i=0;i<11;i++)
+        for(i=0;i<12;i++)
         {
             LCDGoto(i,0);
             LCDPutChar(80+i);
