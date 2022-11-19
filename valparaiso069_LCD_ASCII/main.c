@@ -40,7 +40,7 @@ main()
 
         delay_ms(3000, 16);
 
-        for(i=0;i<12;i++)
+        for(i=0;i<11;i++)
         {
             LCDGoto(i,0);
             LCDPutChar(80+i);
@@ -51,7 +51,10 @@ main()
 
         LCDGoto(0,1);
         LCDPutStr("            DO");
-        LCDPutChar(0x4E);
+
+        //LCDPutChar(0x4E);
+        LCDGoto(15,1);
+
         LCDPutChar(0x45);
 
         delay_ms(4000, 16);
