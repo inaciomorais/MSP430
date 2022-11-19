@@ -3,7 +3,7 @@
  *
  * 11/2022
  *
- * A. In·cio Morais
+ * A. In√°cio Morais
  * anderson.morais@protonmail.com - inacio.morais@protonmail.com
  * +55 35 99161-9878
  *
@@ -40,7 +40,7 @@ void LCDWriteNibble(unsigned char ch, unsigned char rs)
     // set up enable before writing nibble
     LCD_ENABLE;
 
-    delay_ms(1, _MHz);
+    delay_us(5, _MHz);
 
     // turn off enable after write of nibble
     LCD_DISABLE;
