@@ -25,15 +25,15 @@ main()
     clock_config();
     LCD_Initialize(16);         // 16MHz DCO Frequency
 
-    LCDPutCmd(LCD_CGRAM); // Entering initial CGRAM address
-    LCDPutChar(0x00);   // It includes the first CGRAM(1) line      XXX000000
-    LCDPutChar(0x0A);   // It includes the second CGRAM(1) line     XXX001010
-    LCDPutChar(0x1F);   // It includes the third CGRAM(1) line      XXX011111
-    LCDPutChar(0x1F);   // It includes the fourth CGRAM(1) line     XXX011111
-    LCDPutChar(0x1F);   // It includes the fifth CGRAM(1) line      XXX011111
-    LCDPutChar(0x0E);   // It includes the sixth CGRAM(1) line      XXX001110
-    LCDPutChar(0x04);   // It includes the seventh CGRAM(1) line    XXX000100
-    LCDPutChar(0x00);   // It includes the seventh CGRAM(1) line    XXX000000 - Always blank (cursor location)
+    LCDPutCmd(LCD_CGRAM);   // Entering initial CGRAM address
+    LCDPutChar(0x00);       // It includes the first CGRAM(1) line      XXX000000
+    LCDPutChar(0x0A);       // It includes the second CGRAM(1) line     XXX001010
+    LCDPutChar(0x1F);       // It includes the third CGRAM(1) line      XXX011111
+    LCDPutChar(0x1F);       // It includes the fourth CGRAM(1) line     XXX011111
+    LCDPutChar(0x1F);       // It includes the fifth CGRAM(1) line      XXX011111
+    LCDPutChar(0x0E);       // It includes the sixth CGRAM(1) line      XXX001110
+    LCDPutChar(0x04);       // It includes the seventh CGRAM(1) line    XXX000100
+    LCDPutChar(0x00);       // It includes the seventh CGRAM(1) line    XXX000000 - Always blank (cursor location)
     // Continue the sequence of 8 lines per custom character above to include characters in other CGRAM positions
 
     // How to call CGRAM characters:
