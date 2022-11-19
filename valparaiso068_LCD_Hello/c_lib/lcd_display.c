@@ -47,7 +47,7 @@ void LCDWriteNibble(unsigned char ch, unsigned char rs)
 }
 
 void LCDPutCmd(unsigned char ch) {
-    delay_ms(LCD_delay, 16);
+    delay_ms(LCD_delay, _MHz);
 
     //Send the higher nibble
     LCDWriteNibble(ch, instr);
@@ -55,7 +55,7 @@ void LCDPutCmd(unsigned char ch) {
     //get the lower nibble
     ch = (ch << 4);
 
-    delay_ms(1, _MHz);
+    delay_ms(LCD_delay, _MHz);
 
     //Now send the lower nibble
     LCDWriteNibble(ch, instr);
