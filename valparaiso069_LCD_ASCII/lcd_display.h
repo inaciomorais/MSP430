@@ -3,7 +3,7 @@
  *
  * 11/2022
  *
- * A. In·cio Morais
+ * A. In√°cio Morais
  * anderson.morais@protonmail.com - inacio.morais@protonmail.com
  * +55 35 99161-9878
  *
@@ -46,7 +46,7 @@ void LCDGoto(unsigned char pos,unsigned char ln);
 
 //***** Defines ***************************************************************
 // set up the timing for the LCD delays
-#define LCD_delay           5     // ~5mS
+#define LCD_delay           1     // ~1mS
 #define LCD_Startup         15    // ~15mS
 
 // Command set for the LCD display controller (HITACHI HD44780U or WINSTAR WH1602C)
