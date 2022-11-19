@@ -3,7 +3,7 @@
  *
  * 11/2022
  *
- * A. In·cio Morais
+ * A. In√°cio Morais
  * anderson.morais@protonmail.com - inacio.morais@protonmail.com
  * +55 35 99161-9878
  *
