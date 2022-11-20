@@ -25,7 +25,7 @@ main()
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
 
     clock_config();
-    LCD_Initialize(16);         // 16MHz DCO Frequency
+    LCD_Initialize(16);         // 16MHz (DCO Frequency)
 
     while(1)
     {
@@ -38,7 +38,7 @@ main()
             LCDPutChar(64+i);
         }
 
-        delay_ms(3000, 16);
+        delay_ms(3000, 16);     // 3000ms (3s), 16MHz (DCO Frequency)
 
         for(i=0;i<11;i++)
         {
