@@ -22,23 +22,23 @@ main()
 {
     unsigned int i;
 
-    WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
+    WDTCTL = WDTPW | WDTHOLD;     // stop watchdog timer
 
     clock_config();
-    LCD_Initialize(16);         // 16MHz (DCO Frequency)
+    LCD_Initialize(16);           // This routine initializes the LCD driver. 16MHz (DCO Frequency)
 
     while(1)
     {
         for(i=0;i<17;i++)
         {
-            LCDGoto(i,0);
-            LCDPutChar(48+i);
+            LCDGoto(i,0);         // This function positions the cursor at the specified Line and column   
+            LCDPutChar(48+i);     // Writes character to LCD at current cursor position
 
             LCDGoto(i,1);
             LCDPutChar(64+i);
         }
 
-        delay_ms(3000, 16);     // 3000ms (3s), 16MHz (DCO Frequency)
+        delay_ms(3000, 16);       // 3000ms (3s), 16MHz (DCO Frequency)
 
         for(i=0;i<11;i++)
         {
@@ -47,7 +47,7 @@ main()
         }
 
         LCDGoto(11,0);
-        LCDPutStr("     ");
+        LCDPutStr("     ");       // This routine writes string to LCD at current cursor position
 
         LCDGoto(0,1);
         LCDPutStr("            DO");
