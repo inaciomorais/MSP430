@@ -20,13 +20,13 @@ void clock_config(void);
 
 main()
 {
-	WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
+	WDTCTL = WDTPW | WDTHOLD;       // stop watchdog timer
 	
-	clock_config();
-	LCD_Initialize(16);         // 16MHz (DCO Frequency)
+	clock_config();             			
+	LCD_Initialize(16);             // This routine initializes the LCD driver. 16MHz (DCO Frequency)
 
-	LCDGoto(0,0);
-	LCDPutStr("                ");
+	LCDGoto(0,0);                   // This function positions the cursor at the specified Line and column
+	LCDPutStr("                ");  // This routine writes string to LCD at current cursor position
 
 	LCDGoto(0,1);
 	LCDPutStr("           HELLO");
