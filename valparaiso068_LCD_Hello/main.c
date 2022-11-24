@@ -13,7 +13,6 @@
  */
 
 #include <msp430.h>
-#include "delay_xs.h"
 #include "lcd_display.h"
 
 void clock_config(void);
