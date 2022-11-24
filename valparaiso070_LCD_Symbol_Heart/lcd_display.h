@@ -46,7 +46,7 @@ void LCDGoto(unsigned char pos,unsigned char ln);
 
 //***** Defines ***************************************************************
 // set up the timing for the LCD delays
-#define LCD_delay           5     // ~5mS
+#define LCD_delay           2     // ~2mS
 #define LCD_Startup         15    // ~15mS
 
 // Command set for the LCD display controller (HITACHI HD44780U or WINSTAR WH1602C)
@@ -84,7 +84,7 @@ void LCDGoto(unsigned char pos,unsigned char ln);
  * LCD D6 (13) P2.2
  * LCD D7 (11) P2.3
  */
-#define LCD_PORT        P2OUT                  
+#define LCD_PORT        P2OUT
 #define LCD_DIR         P2DIR
 #define LCD_ENABLE      LCD_PORT |=  BIT5      // LCD Enable - E (6)
 #define LCD_DISABLE     LCD_PORT &= ~BIT5
