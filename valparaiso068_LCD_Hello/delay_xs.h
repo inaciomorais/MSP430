@@ -20,7 +20,6 @@
 //***** Prototypes ************************************************************
 void delay_us(unsigned int us, char MHz);
 void delay_ms(unsigned int ms, char MHz);
-//MHz: System Clock [MHz]
 
 
 //***** Defines ***************************************************************
