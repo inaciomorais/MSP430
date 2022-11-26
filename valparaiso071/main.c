@@ -44,10 +44,7 @@ main()
     // [...]
     // LCDPutChar(0x07); // Calling the eighth CGRAM character [CGRAM(8)]
 
-    LCDGoto(0,0);
-    LCDPutStr("                ");
-    LCDGoto(1,0);
-    LCDPutStr("                ");
+    LCDPutCmd(LCD_CLEAR);
 
     ADC10CTL0 |= ADC10IE;
 
