@@ -20,7 +20,7 @@ void clock_config(void);
 
 main()
 {
-    long i = -1050;
+    long i = 0;
     long j;
     unsigned char k;
 
