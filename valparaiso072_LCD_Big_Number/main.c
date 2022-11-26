@@ -20,161 +20,311 @@ void clock_config(void);
 
 main()
 {
-    unsigned long i = 0;
-    unsigned char j;
+    long i = -1050;
+    long j;
+    unsigned char k;
 
     WDTCTL = WDTPW | WDTHOLD;   // stop watchdog timer
 
     clock_config();
     LCD_Initialize(16);         // 16MHz DCO Frequency
 
-    LCDGoto(0,0);
-    LCDPutStr("                ");
-    LCDGoto(0,1);
-    LCDPutStr("                ");
+    LCDPutCmd(LCD_CLEAR);
 
     while(1)
     {
-        while (i < 999999999)
+        if (i < 0)
         {
-            if (i < 10)
-            {
-                LCDGoto(15,0);
-                j = i;
-                LCDPutChar(48 + j);     // Corresponding the integer value to the ASCII table
-            }
+            j = -i;
+        }
+        else
+        {
+            j = i;
+        }
 
-            else if (i < 100)
-            {
-                LCDGoto(14,0);
-                j = i / 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
-            }
+        if (j < 10)
+        {
+            LCDPutCmd(LCD_CLEAR);
+            LCDGoto(15,0);
+            k = j;
+            LCDPutChar(48 + k);     // Corresponding the integer value to the ASCII table
 
-            else if (i < 1000)
+            LCDGoto(13,0);
+            if (i < 0)
             {
-                LCDGoto(13,0);
-                j = i / 100;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
+                LCDPutStr(" ");
+                LCDPutStr("-");
             }
-
-            else if (i < 10000)
-            {
-                LCDGoto(12,0);
-                j = i / 1000;
-                LCDPutChar(48 + j);
-                j = (i / 100) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
-            }
-
-            else if (i < 100000)
-            {
-                LCDGoto(11,0);
-                j = i / 10000;
-                LCDPutChar(48 + j);
-                j = (i / 1000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
-            }
-
-            else if (i < 1000000)
-            {
-                LCDGoto(10,0);
-                j = i / 100000;
-                LCDPutChar(48 + j);
-                j = (i / 10000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 1000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
-            }
-
-            else if (i < 10000000)
-            {
-                LCDGoto(9,0);
-                j = i / 1000000;
-                LCDPutChar(48 + j);
-                j = (i / 100000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 1000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
-            }
-
-            else if (i < 100000000)
-            {
-                LCDGoto(8,0);
-                j = i / 10000000;
-                LCDPutChar(48 + j);
-                j = (i / 1000000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 1000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
-            }
-
             else
             {
-                LCDGoto(7,0);
-                j = i / 100000000;
-                LCDPutChar(48 + j);
-                j = (i / 10000000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 1000000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 1000) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 100) % 10;
-                LCDPutChar(48 + j);
-                j = (i / 10) % 10;
-                LCDPutChar(48 + j);
-                j = i % 10;
-                LCDPutChar(48 + j);
+                LCDPutStr(" ");
+                LCDPutStr(" ");
             }
-
-            delay_ms(1, 16);
-            i++;
         }
+
+        else if (j < 100)
+        {
+            LCDGoto(14,0);
+            k = j / 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(12,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 1000)
+        {
+            LCDGoto(13,0);
+            k = j / 100;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(11,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 10000)
+        {
+            LCDGoto(12,0);
+            k = j / 1000;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(10,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 100000)
+        {
+            LCDGoto(11,0);
+            k = j / 10000;
+            LCDPutChar(48 + k);
+            k = (j / 1000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(9,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 1000000)
+        {
+            LCDGoto(10,0);
+            k = j / 100000;
+            LCDPutChar(48 + k);
+            k = (j / 10000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(8,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 10000000)
+        {
+            LCDGoto(9,0);
+            k = j / 1000000;
+            LCDPutChar(48 + k);
+            k = (j / 100000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(7,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 100000000)
+        {
+            LCDGoto(8,0);
+            k = j / 10000000;
+            LCDPutChar(48 + k);
+            k = (j / 1000000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(6,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else if (j < 1000000000)
+        {
+            LCDGoto(7,0);
+            k = j / 100000000;
+            LCDPutChar(48 + k);
+            k = (j / 10000000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(5,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        else
+        {
+            LCDGoto(6,0);
+            k = j / 1000000000;
+            LCDPutChar(48 + k);
+            k = (j / 100000000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10000000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 1000) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 100) % 10;
+            LCDPutChar(48 + k);
+            k = (j / 10) % 10;
+            LCDPutChar(48 + k);
+            k = j % 10;
+            LCDPutChar(48 + k);
+
+            LCDGoto(4,0);
+            if (i < 0)
+            {
+                LCDPutStr(" ");
+                LCDPutStr("-");
+            }
+            else
+            {
+                LCDPutStr(" ");
+                LCDPutStr(" ");
+            }
+        }
+
+        delay_ms(50, 16);
+        i++;
     }
 }
 
