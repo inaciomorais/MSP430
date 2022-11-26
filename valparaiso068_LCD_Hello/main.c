@@ -24,11 +24,10 @@ main()
 	clock_config();             			
 	LCD_Initialize(16);             // This routine initializes the LCD driver. 16MHz (DCO Frequency)
 
-	LCDGoto(0,0);                   // This function positions the cursor at the specified Line and column
-	LCDPutStr("                ");  // This routine writes string to LCD at current cursor position
+	LCDPutCmd(LCD_CLEAR);
 
-	LCDGoto(0,1);
-	LCDPutStr("           HELLO");
+	LCDGoto(0,1);			// This function positions the cursor at the specified Line and column
+	LCDPutStr("           HELLO");	// This routine writes string to LCD at current cursor position	
 }
 
 void clock_config(void)
