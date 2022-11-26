@@ -52,13 +52,11 @@ main()
             LCDGoto(13,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -73,13 +71,11 @@ main()
             LCDGoto(12,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -96,13 +92,11 @@ main()
             LCDGoto(11,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -121,13 +115,11 @@ main()
             LCDGoto(10,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -148,13 +140,11 @@ main()
             LCDGoto(9,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -177,13 +167,11 @@ main()
             LCDGoto(8,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -208,13 +196,11 @@ main()
             LCDGoto(7,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -241,13 +227,11 @@ main()
             LCDGoto(6,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -276,13 +260,11 @@ main()
             LCDGoto(5,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
@@ -313,13 +295,11 @@ main()
             LCDGoto(4,0);
             if (i < 0)
             {
-                LCDPutStr(" ");
-                LCDPutStr("-");
+                LCDPutStr(" -");
             }
             else
             {
-                LCDPutStr(" ");
-                LCDPutStr(" ");
+                LCDPutStr("  ");
             }
         }
 
