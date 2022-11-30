@@ -1,0 +1,5 @@
+You have two options to use libraries in CCS projects. The first one is to link the files (.h and .lib generated file) directly from the library project location. The second option is copy-paste .h and .lib files in the application location.
+
+Source:
+https://gustavovelascoh.wordpress.com/2015/07/28/creating-a-c-library-in-ccs-code-composer-studio/
+https://gustavovelascoh.wordpress.com/2015/12/30/using-a-c-library-created-with-code-composer-studio-6-ccsv6/
