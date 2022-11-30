@@ -1,0 +1,21 @@
+When people use the Watchdog Timer peripheral, they use one of their timers to count up for a pre-defined internal, and then pet the watchdog  when the timer reaches its count value. Timers are not quite as accurate as we would like, so it is always good to leave some margin for error. Most modern microcontrollers have multiple timers. One is often used for the watchdog timer and general 'upkeep' tasks your microcontroller must periodically perform.
+
+Watchdog Mode
+After a PUC condition, the WDT+ module is configured in the watchdog mode with an initial 32768 cycle reset interval using the DCOCLK. 
+
+(Watchdog clock source == 2^15) / [1000000 (DCOCLK) / 8 (BCSCTL2 DIVSx)] = 32768 / 125000 = 0,262144 = 262 ms
+
+On 1.x series, the WDT can be configured to be clocked by either SMCLK or ACLK. If one of them is unused in the software or used with less than maximum speed (e.g. 1MHz or 32768kHz), then if hte WDT is clocked from there, it will expire MUCH slower. (for a 32kHz clock, the maximum delay would be 1s and ~33ms for 1mHz).
+
+Later WDT versions (e.g. 5x series)  have a 31 bit counter and allow delays up to 18hrs. And also more lock options, such as the internal 32kHz clock or the power-saving VLO clock (with ~10kHz). The default value, however, is still 32768 pulses from SMCLK.
+
+On the 2xxx series, ACLK is always routed from XT1, so if oyu don't have an XT1 crystal, ACLK is useless. (on 1x and 5x series, ACLK can be sourced from DCO too).
+
+WDTCTL, Watchdog Timer+ Register
+WDTISx - Bits 1-0 (00) - Watchdog timer+ interval select. These bits select the watchdog timer+ interval to set the WDTIFG flag and/or generate a PUC.
+00 Watchdog clock source /32768
+01 Watchdog clock source /8192
+10 Watchdog clock source /512
+11 Watchdog clock source /64
+
+
