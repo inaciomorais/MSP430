@@ -30,7 +30,7 @@ main()
 
     while(1)
     {
-        scrollwords("This message moves...", 2, 0, 300, 16);   // (string, col, line, delay_ms, clock)
+        scrollwords("This message moves...", 0, 0, 300, 16);   // (string, col, line, delay_ms, clock)
     }
 }
 
