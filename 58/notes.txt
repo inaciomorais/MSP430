@@ -1,0 +1,51 @@
+Each pin in ports P1 and P2 have interrupt capability, configured with the PxIFG, PxIE, and PxIES registers. All P1 pins source a single interrupt vector, and all P2 pins source a different single interrupt vector. The PxIFG register can be tested to determine the source of a P1 or P2 interrupt.
+
+
+Interrupt Enable P1IE, P2IE
+
+Each PxIE bit enables the associated PxIFG interrupt flag.
+Bit = 0: The interrupt is disabled.
+Bit = 1: The interrupt is enabled.
+
+
+Interrupt Edge Select Registers P1IES, P2IES
+
+Each PxIES bit selects the interrupt edge for the corresponding I/O pin.
+Bit = 0: The PxIFGx flag is set with a low-to-high transition
+Bit = 1: The PxIFGx flag is set with a high-to-low transition
+
+
+Interrupt Flag Registers P1IFG, P2IFG
+
+Each PxIFGx bit is the interrupt flag for its corresponding I/O pin and is set when the selected input signal edge occurs at the pin. All PxIFGx interrupt flags request an interrupt when their corresponding PxIE bit and the GIE bit are set. Each PxIFG flag must be reset with software. Software can also set each PxIFG flag, providing a way to generate a software initiated interrupt.
+Bit = 0: No interrupt is pending
+Bit = 1: An interrupt is pending
+
+To enable a digital interrupt, we need to set a bit in the Port Interrupt Enable register. For example, to enable an interrupt on our P1.3 pushbutton, we set BIT3 in the Port 1 Interrupt Enable (P1IE) register. 
+
+P1IE = BIT3;
+
+You need to specify what kind of 'event' you want to generate an interrupt. You can either choose to have  an interrupt if the corresponding pin has a HI-to-LO transition or a LO-to-HI transition. For the P1.3 button, to specify if the interrupt will occur on HI-to-LO transitions, we need to set the corresponding bit in the Port 1 Interrupt Edge Select (PIES) register HI.
+
+P1IES = BIT3;
+
+Similarly, if we wanted to interrupt on LO-to-HI P1.3 transitions, we would clear the bit.
+
+P1IES = P1IES & ~BIT3;
+
+Unlike the Timer0 ISR, somewhere in the digital input ISR, you need to clear the corresponding bit in the Port 1 Interrupt FlaG register when we are ready to return to main().
+
+P1IFG = P1IFG & ~BIT3;
+
+Due to switch bounce, sometimes the LED may appear 'stuck'. It might require 2 or 3 button pushes. Sometimes, the light will toggle briefly, and then switch back without a second button push. It is a problem inherent in 'real world' mechanical switches that are not perfect. To tackle this problem, we add a simple delay using a for loop after the P1.3 interrupt service rountine begins (While you could use a timer to implement this delay, the loop is more convenient inside a ISR).
+
+To work with multiple interrupt sources on a single port (MSP430FR58xx, MSP430FR59xx, and MSP430FR6xx Family - MSP430FR6989 Launchpad), we should use one final register - the Port 1 Interrupt Vector (P1IV) register. With the use of the switch on the P1IV register, we no longer need to clear the digital input interrupt flag.
+
+P1.0 generates an interrupt P1IV = 0x02
+P1.1 generates an interrupt P1IV = 0x04
+P1.2 generates an interrupt P1IV = 0x06
+P1.3 generates an interrupt P1IV = 0x08
+P1.4 generates an interrupt P1IV = 0x0A
+P1.5 generates an interrupt P1IV = 0x0C
+P1.6 generates an interrupt P1IV = 0x0E
+P1.7 generates an interrupt P1IV = 0x10
