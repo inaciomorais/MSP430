@@ -1,0 +1,46 @@
+ISR Interrupt Service Rountine
+
+You need to enable your peripheral to use an interrupt. For the gerneral purpose timers on the MSP430, this is accomplished with a single additional instruction: TA0CCTL0 = CCIE;
+
+TACCTLx, Capture/Compare Control Register
+
+CCIE - Bit 4 - Capture/compare interrupt enable. This bit enables the interrupt request of the corresponding CCIFG flag.
+0 Interrupt disabled
+1 Interrupt enabled
+
+OUTMODx - Bits 7-5 - Output mode. Modes 2, 3, 6, and 7 are not useful for TACCR0, because EQUx = EQU0.
+000 OUT bit value
+001 Set
+010 Toggle/reset
+011 Set/reset
+100 Toggle
+101 Reset
+110 Toggle/set
+111 Reset/set
+
+Second, after enabling the interrupts of the individual peripherals, you use one more "global" command to tell the microcontroller that you are ready for the interrupts to start.
+
+To perform this second step, you need to perform the following command, where GIE stands for Global Interrupt Enable bit: _BIS_SR(GIE);
+
+_BIS_SR is a special function developed by Texas Instruments specifically to set bits (BIt Set) int the Status Register.
+
+The only thing we have left to do is create the interrupt service rountine function itself:
+
+#pragma vector=TIMER0_A0_VECTOR
+
+__interrupt void Timer0_ISR (void) {
+	
+}
+
+The first line of the ISR must always look like this: #pragma vector=TIMER0_A0_VECTOR
+
+Because ISRs are so special, they must be placed in very exact locations in program memory. This instruction ensures that the Timer0 ISR is placed properly.
+
+The second line of code of the ISR is where you specify the function you are creating is an ISR and you give it a name. We saw that we could omit the void labels for the input and output type. However, omitting them in an interrupt service rountine will generate an error.
+
+Status Register Bits
+GIE - Bit 3 - General interrupt enable. When set, enables maskable interrupts. When reset, all maskable interrupts are disabled.
+
+As diretivas pragma especificam recursos de compilador específicos ao sistema (no caso, especificos ao sistema microcontrolado).
+
+In the past, we always had to make sure that we cleared the TAIFG flag in the TA0CTL register after the timer elapsed. This is automatically included by CCS withe the TIMER0_A0_VECTOR ISR.
