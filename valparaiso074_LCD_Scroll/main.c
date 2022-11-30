@@ -17,7 +17,7 @@
 #include "lcd_display.h"
 
 void clock_config(void);
-void scrollwords(char words[250], char line, unsigned int ms, char MHz);
+void scrollwords(char words[250], char col, char line, unsigned int ms, char MHz);
 
 main()
 {
@@ -30,7 +30,7 @@ main()
 
     while(1)
     {
-        scrollwords("This message moves...", 0, 300, 16);   // (string, line, delay_ms, clock)
+        scrollwords("This message moves...", 2, 0, 300, 16);   // (string, col, line, delay_ms, clock)
     }
 }
 
@@ -41,22 +41,22 @@ void clock_config(void)
     DCOCTL  = CALDCO_16MHZ;      // BCSCTL1 register settings)
 }
 
-void scrollwords(char words[250], char line, unsigned int ms, char MHz)
+void scrollwords(char words[250], char col, char line, unsigned int ms, char MHz)
 {
     unsigned int length = strlen(words);
     unsigned int _shifted = 0;
 
-    if (length < 17)   // 16 + '/0'
+    if (length < (17 - col))   // 16 + '/0'
     {
-        LCDGoto(0,line);
+        LCDGoto(col, line);
         LCDPutStr(words);
-        delay_ms(1000, MHz);
+        delay_ms(350, MHz);
     }
     else
     {
-        while (_shifted < (length - 15))
+        while (_shifted < (length - (15 - col)))
         {
-            LCDGoto(0,line);
+            LCDGoto(col, line);
             LCDPutChar(words[_shifted]);       //0
             LCDPutChar(words[_shifted + 1]);   //1
             LCDPutChar(words[_shifted + 2]);   //2
@@ -74,8 +74,8 @@ void scrollwords(char words[250], char line, unsigned int ms, char MHz)
             LCDPutChar(words[_shifted + 14]);  //14
             LCDPutChar(words[_shifted + 15]);  //15
 
-            if(_shifted == 0) delay_ms(2000, MHz);  // first delay
-            else if (_shifted == (length - 16)) delay_ms(1000, MHz); // last delay
+            if(_shifted == 0) delay_ms(1500, MHz);  // starting delay
+            else if (_shifted == (length - (16 - col))) delay_ms(750, MHz); // ending delay
             else delay_ms(ms, MHz);
 
             _shifted++;
