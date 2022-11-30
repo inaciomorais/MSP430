@@ -1,0 +1,139 @@
+ADC - Analog-to-digital converter
+
+
+1 x 10-Bit 200-ksps Analog-to-Digital (A/D) Converter [8 Channels - A0 (P1.0) - A7 (P1.7)]
+
+Vax - Analog input voltage: 0 - Vcc V
+
+The ADC10CLK is used both as the conversion clock and to generate the sampling period. The ADC10 source clock is selected using the ADC10SSELx bits and can be divided from 1 to 8 using the ADC10DIVx bits. Possible ADC10CLK sources are SMCLK, MCLK, ACLK, and internal oscillator ADC10OSC.
+
+The ADC10OSC, generated internally, is in the 5-MHz range (3.7 - 6.3 MHz), but varies with individual devices, supply voltage, and temperature.
+
+The SHTx bits select the sample period tsample to be 4, 8, 16, or 64 ADC10CLK cycles. The sampling timer sets SAMPCON high for the selected sample period after synchronization with ADC10CLK.Total sampling time is tsample plus tsync.The high-to-low SAMPCON transition starts the analog-to-digital conversion, which requires 13 ADC10CLK cycles.
+
+The resistance of the source RS and RI affect tsample.The following equations can be used to calculate the minimum sampling time for a 10-bit conversion.
+tsample > (RS + RI) × ln(211) × CI
+
+Substituting the values for RI and CI given above, the equation becomes:
+tsample > (RS + 2 kΩ) × 7.625 × 27 pF
+
+
+1 [s] / (fADC10CLK = fADC10OSC = 5000000 [MHz]) = 0,0000002s
+
+tsample (ADC10SHT)
+4  x ADC10CLK =  0,8us
+8  x ADC10CLK =  1,6us
+16 x ADC10CLK =  3,2us
+64 x ADC10CLK = 12,8us
+
+The ADC10 has four operating modes selected by the CONSEQx bits.
+00 - Single channel single-conversion - A single channel is converted once.
+01 - Sequence-of-channels - A sequence of channels is converted once.
+10 - Repeat single channel - A single channel is converted repeatedly.
+11 - Repeat sequence-of-channels - A sequence of channels is converted repeatedly.
+
+A single channel selected by INCHx is sampled and converted once. The ADC result is written to ADC10MEM.
+
+Resetting ENC in single-channel single-conversion mode stops a conversion immediately and the results are unpredictable. For correct results, poll the ADC10BUSY bit until reset before clearing ENC.
+
+ADC10IFG is set when conversion results are loaded into ADC10MEM. If both the ADC10IE and the GIE bits are set, then the ADC10IFG flag generates an interrupt request. The ADC10IFG flag is automatically reset when the interrupt request is serviced, or it may be reset by software.
+
+ADC10CTL0, ADC10 Control Register 0
+SREFx - Bits 15-13 - Select reference:
+000 VR+ = VCC and VR- = VSS
+001 VR+ = VREF+ and VR- = VSS
+010 VR+ = VeREF+ and VR- = VSS. Devices with VeREF+ only.
+011 VR+ = Buffered VeREF+ and VR- = VSS. Devices with VeREF+ pin only.
+100 VR+ = VCC and VR- = VREF-/ VeREF-. Devices with VeREF- pin only.
+101 VR+ = VREF+ and VR- = VREF-/ VeREF-. Devices with VeREF+/- pins only.
+110 VR+ = VeREF+ and VR- = VREF-/ VeREF-. Devices with VeREF+/- pins only.
+111 VR+ = Buffered VeREF+ and VR- = VREF-/ VeREF-. Devices with VeREF+/- pins only.
+
+ADC10SHTx - Bits 12-11 - ADC10 sample-and-hold time
+00 4 × ADC10CLKs
+01 8 × ADC10CLKs
+10 16 × ADC10CLKs
+11 64 × ADC10CLKs
+
+ADC10ON - Bit 4 - ADC10 on
+0 ADC10 off
+1 ADC10 on
+
+ADC10IE - Bit 3 - ADC10 interrupt enable
+0 Interrupt disabled
+1 Interrupt enabled
+
+ADC10IFG - Bit 2 - ADC10 interrupt flag. This bit is set if ADC10MEM is loaded with a conversion result. It is automatically reset when the interrupt request is accepted, or it may be reset by software. When using the DTC this flag is set when a block of transfers is completed.
+0 No interrupt pending
+1 Interrupt pending
+
+ENC - Bit 1 - Enable conversion
+0 ADC10 disabled
+1 ADC10 enabled
+
+ADC10SC - Bit 0 - Start conversion. Software-controlled sample-and-conversion start. ADC10SC and ENC may be set together with one instruction. ADC10SC is reset automatically.
+0 No sample-and-conversion start
+1 Start sample-and-conversion
+
+
+ADC10CTL1, ADC10 Control Register 1
+INCHx - Bits 15-12 - Input channel select. These bits select the channel for a single-conversion or the highest channel for a sequence of conversions. Only available ADC channels should be selected. See device specific data sheet.
+0000 A0
+0001 A1
+0010 A2
+0011 A3
+0100 A4
+0101 A5
+0110 A6
+0111 A7
+1000 VeREF+
+1001 VREF-/VeREF-
+1010 Temperature sensor
+1011 (VCC - VSS) / 2
+1100 (VCC - VSS) / 2, A12 on MSP430F22xx devices
+1101 (VCC - VSS) / 2, A13 on MSP430F22xx devices
+1110 (VCC - VSS) / 2, A14 on MSP430F22xx devices
+1111 (VCC - VSS) / 2, A15 on MSP430F22xx devices
+
+SHSx - Bits 11-10 - Sample-and-hold source select.
+00 ADC10SC bit
+01 Timer_A.OUT1
+10 Timer_A.OUT0
+11 Timer_A.OUT2 (Timer_A.OUT1 on MSP430F20x0, MSP430G2x31, and MSP430G2x30 devices)
+
+ADC10DIVx - Bits 7-5 - ADC10 clock divider
+000 /1
+001 /2
+010 /3
+011 /4
+100 /5
+101 /6
+110 /7
+111 /8
+
+ADC10SSELx - Bits 4-3 - ADC10 clock source select
+00 ADC10OSC
+01 ACLK
+10 MCLK
+11 SMCLK
+
+CONSEQx - Bits 2-1 - Conversion sequence mode select
+00 Single-channel-single-conversion
+01 Sequence-of-channels
+10 Repeat-single-channel
+11 Repeat-sequence-of-channels
+
+ADC10BUSY - Bit 0 - ADC10 busy. This bit indicates an active sample or conversion operation
+0 No operation is active.
+1 A sequence, sample, or conversion is active.
+
+
+ADC10AE0, Analog (Input) Enable Control Register 0
+ADC10AE0x - Bits 7-0 - ADC10 analog enable. These bits enable the corresponding pin for analog input. BIT0 corresponds to A0, BIT1 corresponds to A1, etc. The analog enable bit of not implemented channels should not be programmed to 1.
+0 Analog input disabled
+1 Analog input enabled
+
+
+ADC10MEM, Conversion-Memory Register, Binary Format
+Conversion - Bits 15-0 - The 10-bit conversion results are right justified, straight-binary format. Bit 9 is the MSB. Bits 15-10 are Results always 0.
+
